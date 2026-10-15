@@ -1,0 +1,14 @@
+# Local environment files (real secrets live here, never commit them)
+.env
+.env.*
+!.env.example
+
+# AI tools
+CLAUDE.md
+.claude/
+.cursor/
+
+# IDE and OS
+.idea/
+.vscode/
+.DS_Store
