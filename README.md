@@ -12,6 +12,7 @@
 6. [Branching and commits](#branching-and-commits)
 7. [Project status](#project-status)
 8. [Team](#team)
+9. [Security](#security)
 
 ## About
 
@@ -50,7 +51,7 @@ The `.env` file contains secrets and is ignored by Git. Never commit it.
 
 ## Usage
 
-> Planned: the Compose file is added with the `store-service` image.
+> The Compose file is added with the `store-service` image.
 
 ```bash
 docker compose up -d     # start the platform
@@ -66,13 +67,18 @@ docker compose down      # stop it
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow.
 
+## Security
+
+See [SECURITY.md](SECURITY.md) to report a vulnerability. The repository is monitored by Dependabot (images used in the Compose file) and GitHub secret scanning with push protection.
+
 ## Project status
 
 | Item | Status |
-|---|---|
+|---|------|
 | Repository setup | In progress |
-| Docker Compose with `store-service` | Planned |
+| Docker Compose with `store-service` | Done |
 | Architecture diagrams | Planned |
+|Security scanning | Done |
 
 ## Team
 
