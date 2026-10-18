@@ -10,9 +10,9 @@
 4. [Configuration](#configuration)
 5. [Usage](#usage)
 6. [Branching and commits](#branching-and-commits)
-7. [Project status](#project-status)
-8. [Team](#team)
-9. [Security](#security)
+7. [Security](#security)
+8. [Project status](#project-status)
+9. [Team](#team)
 
 ## About
 
@@ -24,14 +24,14 @@ ShopLoc is a multi-city local commerce platform split into microservices, each l
 | `store-service` | Shops, catalogue, stock, favourites |
 | `order-service` | Cart, orders, payment, pick-up |
 | `notification-analytics-service` | Notifications, statistics and reports |
-| `shoploc-frontend` | Web application |
+| `shoploc-frontend` | Web application served by nginx, forwards `/api` to `store-service` |
 | `shoploc-infra` | **This repository** |
 
 ## Repository content
 
 ```text
 shoploc-infra
-├── docker-compose.yml    # Starts the database and the services (planned)
+├── docker-compose.yml    # Starts the database, store-service and the front end
 ├── .env.example          # Template of the environment variables
 ├── docs/                 # Diagrams and shared documentation (planned)
 └── README.md
@@ -41,6 +41,14 @@ shoploc-infra
 
 - Git
 - Docker Desktop
+- The `store-service` and `shoploc-frontend` repositories cloned **next to** `shoploc-infra` (same parent folder), because the images are built from them:
+
+```text
+shoploc/
+├── shoploc-infra/
+├── store-service/
+└── shoploc-frontend/
+```
 
 ## Configuration
 
@@ -51,19 +59,27 @@ The `.env` file contains secrets and is ignored by Git. Never commit it.
 
 ## Usage
 
-> The Compose file is added with the `store-service` image.
-
 ```bash
-docker compose up -d     # start the platform
-docker compose down      # stop it
+docker compose up --build    # build the images and start the platform
+docker compose up -d         # start it in the background
+docker compose down          # stop it
 ```
+
+Once the platform is running:
+
+| URL | Description |
+|---|---|
+| http://localhost:3000 | Web application |
+| http://localhost:8080/swagger-ui.html | API documentation (Swagger) |
+
+The database content is kept in the `db-data` volume. `docker compose down -v` also deletes it.
 
 ## Branching and commits
 
 - `main`: stable, protected, changes only through pull requests.
 - `develop`: integration branch.
 - Branches are named `feature/<TICKET>-short-description`.
-- Commits follow [Conventional Commits](https://www.conventionalcommits.org/), for example `chore(compose): add database service [GLOP-40]`.
+- Commits follow [Conventional Commits](https://www.conventionalcommits.org/), for example `feat(compose): add the front end to the stack [GLOP-41]`.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow.
 
@@ -74,11 +90,12 @@ See [SECURITY.md](SECURITY.md) to report a vulnerability. The repository is moni
 ## Project status
 
 | Item | Status |
-|---|------|
+|---|---|
 | Repository setup | In progress |
 | Docker Compose with `store-service` | Done |
+| Front end in Docker Compose | Done |
+| Security scanning | Done |
 | Architecture diagrams | Planned |
-|Security scanning | Done |
 
 ## Team
 
