@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [develop, main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      POSTGRES_DB: shoploc
+      POSTGRES_USER: shoploc
+      POSTGRES_PASSWORD: ci-only-password
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Validate docker-compose file
+        run: docker compose config --quiet
