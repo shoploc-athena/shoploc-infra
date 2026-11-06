@@ -15,7 +15,8 @@ services:
     restart: unless-stopped
 
   store-service:
-    build: ../store-service
+    image: ghcr.io/shoploc-athena/store-service:develop
+    platform: linux/amd64
     environment:
       DB_URL: jdbc:postgresql://db:5432/${POSTGRES_DB}
       DB_USER: ${POSTGRES_USER}
@@ -28,26 +29,29 @@ services:
     restart: unless-stopped
 
   user-service:
-    build: ../user-service
+    image: ghcr.io/shoploc-athena/user-service:develop
+    platform: linux/amd64
     ports:
       - "8081:8080"
     restart: unless-stopped
 
   order-service:
-    build: ../order-service
+    image: ghcr.io/shoploc-athena/order-service:develop
+    platform: linux/amd64
     ports:
       - "8082:8080"
     restart: unless-stopped
 
   notification-analytics-service:
-    build: ../notification-analytics-service
+    image: ghcr.io/shoploc-athena/notification-analytics-service:develop
+    platform: linux/amd64
     ports:
       - "8083:8080"
     restart: unless-stopped
 
   frontend:
-    build:
-      context: ../shoploc-frontend
+    image: ghcr.io/shoploc-athena/shoploc-frontend:develop
+    platform: linux/amd64
     ports:
       - "3000:80"
     depends_on:
