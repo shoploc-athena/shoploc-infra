@@ -27,7 +27,7 @@ services:
       db:
         condition: service_healthy   # wait until the database is ready
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost:8080/actuator/health"]
+      test: ["CMD", "curl", "-sf", "http://localhost:8080/actuator/health"]
       interval: 10s
       timeout: 5s
       retries: 5
