@@ -41,10 +41,6 @@ services:
       JAVA_TOOL_OPTIONS: -XX:MaxRAMPercentage=75
     ports:
       - "8080:8080"
-    networks:
-      default:
-        aliases:
-          - store-service   # temporary: the current gateway still calls "store-service"
     depends_on:
       db:
         condition: service_healthy

@@ -37,6 +37,9 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: Add the local city hosts
+        run: echo "127.0.0.1 lille.shoploc.local paris.shoploc.local" | sudo tee -a /etc/hosts
+
       - name: Start the platform
         run: docker compose up -d --wait --wait-timeout 180
 
