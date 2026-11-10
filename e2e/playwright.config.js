@@ -5,7 +5,7 @@ module.exports = defineConfig({
     timeout: 30000,
     reporter: [['list'], ['html', { open: 'never' }]],
     use: {
-        baseURL: process.env.BASE_URL || 'http://localhost:3000',
+        baseURL: process.env.BASE_URL || 'http://lille.shoploc.local:3000',
         screenshot: 'only-on-failure',
     },
     projects: [{ name: 'chromium', use: { browserName: 'chromium' } }],
