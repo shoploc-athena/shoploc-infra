@@ -15,6 +15,9 @@ jobs:
       POSTGRES_DB: shoploc
       POSTGRES_USER: shoploc
       POSTGRES_PASSWORD: ci-only-password
+      USER_LILLE_DB_PASSWORD: ci-only-password
+      STORE_LILLE_DB_PASSWORD: ci-only-password
+      ORDER_LILLE_DB_PASSWORD: ci-only-password
     steps:
       - uses: actions/checkout@v7
 
@@ -28,6 +31,9 @@ jobs:
       POSTGRES_DB: shoploc
       POSTGRES_USER: shoploc
       POSTGRES_PASSWORD: ci-only-password
+      USER_LILLE_DB_PASSWORD: ci-only-password
+      STORE_LILLE_DB_PASSWORD: ci-only-password
+      ORDER_LILLE_DB_PASSWORD: ci-only-password
     steps:
       - uses: actions/checkout@v7
 
