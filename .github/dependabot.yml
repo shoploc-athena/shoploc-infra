@@ -1,0 +1,13 @@
+version: 2
+updates:
+  # Images used in docker-compose.yml
+  - package-ecosystem: "docker-compose"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    ignore:
+      # A major PostgreSQL upgrade requires a data migration: decide it as a team
+      - dependency-name: "postgres"
+        update-types: ["version-update:semver-major"]
+    commit-message:
+      prefix: "chore(docker)"

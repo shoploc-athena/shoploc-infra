@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [develop, main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      POSTGRES_DB: shoploc
+      POSTGRES_USER: shoploc
+      POSTGRES_PASSWORD: ci-only-password
+      USER_LILLE_DB_PASSWORD: ci-only-password
+      STORE_LILLE_DB_PASSWORD: ci-only-password
+      ORDER_LILLE_DB_PASSWORD: ci-only-password
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Validate docker-compose file
+        run: docker compose config --quiet
+
+  e2e:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      POSTGRES_DB: shoploc
+      POSTGRES_USER: shoploc
+      POSTGRES_PASSWORD: ci-only-password
+      USER_LILLE_DB_PASSWORD: ci-only-password
+      STORE_LILLE_DB_PASSWORD: ci-only-password
+      ORDER_LILLE_DB_PASSWORD: ci-only-password
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Add the local city hosts
+        run: echo "127.0.0.1 lille.shoploc.local paris.shoploc.local" | sudo tee -a /etc/hosts
+
+      - name: Start the platform
+        run: docker compose up -d --wait --wait-timeout 180
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: e2e/package-lock.json
+
+      - name: Install test dependencies
+        working-directory: e2e
+        run: npm ci
+
+      - name: Install the browser
+        working-directory: e2e
+        run: npx playwright install --with-deps chromium
+
+      - name: Run the end-to-end tests
+        working-directory: e2e
+        run: npm test
+
+      - name: Show service logs on failure
+        if: failure()
+        run: docker compose logs
+
+      - name: Upload the test report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: e2e/playwright-report/
