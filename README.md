@@ -61,6 +61,17 @@ The service images are downloaded from GitHub Container Registry, so the other r
 ```text
 127.0.0.1 lille.shoploc.local paris.shoploc.local
 ```
+Variables to set in `.env`:
+
+| Variable | Used by | Description |
+|---|---|---|
+| `JWT_SECRET` | `user-service`, `store-service` | Shared secret that signs and verifies the login tokens (JWT, HS256). At least 32 random bytes: generate it with `openssl rand -base64 48`. Changing it invalidates every token already issued. |
+| `ASSOCIATION_ADMIN_EMAIL` | `user-service` | Email of the first association account, created at startup if no association account exists. |
+| `ASSOCIATION_ADMIN_PASSWORD` | `user-service` | Password of that account (12 characters minimum). Never logged. |
+
+`CITY` is set in `docker-compose.yml`, not in `.env`: each city instance has its own value (`lille` today). A Paris instance will use `CITY: paris`. A service rejects a token issued for another city.
+
+In the CI, these variables get fake values reserved for tests.
 
 The `.env` file contains secrets and is ignored by Git. Never commit it.
 

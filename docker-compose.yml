@@ -39,6 +39,9 @@ services:
       DB_USER: store_lille
       DB_PASSWORD: ${STORE_LILLE_DB_PASSWORD}
       JAVA_TOOL_OPTIONS: -XX:MaxRAMPercentage=75
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required}
+      CITY: lille
+      SPRING_PROFILES_ACTIVE: dev
     ports:
       - "8080:8080"
     depends_on:
@@ -53,6 +56,10 @@ services:
       DB_USER: user_lille
       DB_PASSWORD: ${USER_LILLE_DB_PASSWORD}
       JAVA_TOOL_OPTIONS: -XX:MaxRAMPercentage=75
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET is required}
+      CITY: lille
+      ASSOCIATION_ADMIN_EMAIL: ${ASSOCIATION_ADMIN_EMAIL:?ASSOCIATION_ADMIN_EMAIL is required}
+      ASSOCIATION_ADMIN_PASSWORD: ${ASSOCIATION_ADMIN_PASSWORD:?ASSOCIATION_ADMIN_PASSWORD is required}
     ports:
       - "8081:8080"
     depends_on:
