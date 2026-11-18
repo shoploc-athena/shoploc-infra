@@ -18,6 +18,9 @@ jobs:
       USER_LILLE_DB_PASSWORD: ci-only-password
       STORE_LILLE_DB_PASSWORD: ci-only-password
       ORDER_LILLE_DB_PASSWORD: ci-only-password
+      JWT_SECRET: ci-only-jwt-secret-at-least-32-characters-long
+      ASSOCIATION_ADMIN_EMAIL: ci-admin@example.org
+      ASSOCIATION_ADMIN_PASSWORD: ci-only-password
     steps:
       - uses: actions/checkout@v7
 
